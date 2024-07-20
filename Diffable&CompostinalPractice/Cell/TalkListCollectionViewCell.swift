@@ -9,13 +9,21 @@ import UIKit
 
 class TalkListCollectionViewCell: BaseCollectionViewCell {
     
-    let profileImageView = UIImageView().then {
+    var profileImageView = UIImageView().then {
         $0.layer.cornerRadius = 15
         $0.clipsToBounds =  true
     }
-    let talkRoomNameLabel = UILabel()
-    let recentTalkLabel = UILabel()
-    let dateLabel = UILabel()
+    var talkRoomNameLabel = UILabel().then {
+        $0.font = .boldSystemFont(ofSize: 15)
+    }
+    var recentTalkLabel = UILabel().then {
+        $0.textColor = .gray
+        $0.font = .boldSystemFont(ofSize: 13)
+    }
+    var dateLabel = UILabel().then {
+        $0.textColor = .gray
+        $0.font = .systemFont(ofSize: 13)
+    }
     
     override func configureHierarchy() {
         addSubview(profileImageView)
@@ -26,22 +34,21 @@ class TalkListCollectionViewCell: BaseCollectionViewCell {
     override func configureLayout() {
         profileImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().inset(10)
+            make.leading.equalToSuperview().inset(15)
+            make.width.equalTo(contentView).multipliedBy(0.18)
+            make.height.equalTo(contentView).multipliedBy(0.8)
         }
         talkRoomNameLabel.snp.makeConstraints { make in
-            make.leading.equalTo(profileImageView.snp.trailing).offset(5)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(15)
             make.top.equalTo(profileImageView.snp.top).inset(5)
         }
         recentTalkLabel.snp.makeConstraints { make in
-            make.leading.equalTo(profileImageView.snp.trailing).offset(5)
-            make.bottom.equalTo(profileImageView.snp.bottom).inset(5)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(15)
+            make.top.equalTo(talkRoomNameLabel.snp.bottom).offset(15)
         }
         dateLabel.snp.makeConstraints { make in
             make.centerY.equalTo(talkRoomNameLabel)
-            make.trailing.equalToSuperview().inset(5)
+            make.trailing.equalToSuperview().inset(15)
         }
-    }
-    override func configureView() {
-        
     }
 }
