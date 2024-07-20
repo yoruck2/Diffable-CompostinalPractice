@@ -19,7 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: scene)
-        let vc = SettingViewcontroller()
+        window?.backgroundColor = .white
+        let vc = TalkListViewController()
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }
