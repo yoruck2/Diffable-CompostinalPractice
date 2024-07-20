@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: scene)
         window?.backgroundColor = .white
-        let vc = TalkListViewController()
+        let vc = UINavigationController(rootViewController: TalkListViewController())
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }
