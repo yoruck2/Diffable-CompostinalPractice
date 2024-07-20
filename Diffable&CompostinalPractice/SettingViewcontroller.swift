@@ -74,8 +74,7 @@ class SettingViewcontroller: UIViewController {
     // MARK: 헤더뷰 등록 -
     func configureHeaderRegistration() {
         headerRegistration = UICollectionView.SupplementaryRegistration
-        <UICollectionViewListCell>(elementKind: UICollectionView.elementKindSectionHeader) {
-            (headerView, elementKind, indexPath) in
+        <UICollectionViewListCell>(elementKind: UICollectionView.elementKindSectionHeader) {(headerView, elementKind, indexPath) in
             
             var configuration = headerView.defaultContentConfiguration()
             configuration.text = Preference.allCases[indexPath.section].rawValue
@@ -117,12 +116,10 @@ class SettingViewcontroller: UIViewController {
             return
         }
         var snapshot = NSDiffableDataSourceSnapshot<Preference, String>()
-        // 겹치면 안됨!!
         snapshot.appendSections([.entire, .personal, .etc])
         snapshot.appendItems(Preference.entire.subOptions, toSection: .entire)
         snapshot.appendItems(Preference.personal.subOptions, toSection: .personal)
         snapshot.appendItems(Preference.etc.subOptions, toSection: .etc)
-        //        snapshot.appendItems([Fruit(name: "테스트", count: 2, price: 400)], toSection:  .sub)
         dataSource.apply(snapshot)
     }
 }
