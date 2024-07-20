@@ -22,11 +22,6 @@ class BaseViewController<RootView: UIView>: UIViewController {
         configureView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = true
-        navigationController?.isToolbarHidden = false
-    }
-    
     func configureHierarchy() {}
     func configureLayout() {}
     func configureView() {}
