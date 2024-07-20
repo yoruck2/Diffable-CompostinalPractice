@@ -11,23 +11,23 @@ enum Section: CaseIterable {
     case chatRoom
 }
 
-class TalkListViewController: BaseViewController<TalkListView> {
+class TalkListViewController: BaseViewController<TalkListView, TalkListViewModel> {
     
     var dataSource: UICollectionViewDiffableDataSource<Section, ChatRoom>!
     var registeration: UICollectionView.CellRegistration<TalkListCollectionViewCell, ChatRoom>!
-    var mockData = MockChat().mockChatList
-    
-    lazy var searchedRoomList: [ChatRoom] = mockData {
-        didSet {
-            updateSnaphot()
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDataSource()
         updateSnaphot()
         configureSearchBar()
+        bindViewModel()
+    }
+    
+    override func bindViewModel() {
+        viewModel.outputSearchedRoomList.bindEarly { [weak self] _ in
+            self?.updateSnaphot()
+        }
     }
     
     override func configureView() {
@@ -54,6 +54,7 @@ extension TalkListViewController {
         })
     }
     func updateSnaphot() {
+        guard let searchedRoomList = viewModel.outputSearchedRoomList.value else { return }
         var snapshot = NSDiffableDataSourceSnapshot<Section, ChatRoom>()
         snapshot.appendSections([.chatRoom])
         snapshot.appendItems(searchedRoomList, toSection: .chatRoom)
@@ -71,19 +72,6 @@ extension TalkListViewController: UISearchResultsUpdating {
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        
-        guard let text = searchController.searchBar.text?.lowercased() else {
-            searchedRoomList = mockData
-            return
-        }
-        
-        if text == "" {
-            searchedRoomList = mockData
-            
-        } else {
-            searchedRoomList = mockData.filter {
-                $0.chatroomName.lowercased().contains(text)
-            }
-        }
+        viewModel.inputSearchedRoomList.value = searchController.searchBar.text?.lowercased()
     }
 }
