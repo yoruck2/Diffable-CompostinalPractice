@@ -7,6 +7,26 @@
 
 import Foundation
 
+struct ChatRoom: Hashable, Identifiable {
+    let id: UUID
+    let chatroomImage: String
+    let chatroomName: String
+    let chatList: [Chat]
+    
+    static func == (lhs: ChatRoom, rhs: ChatRoom) -> Bool {
+        return lhs.id == rhs.id &&
+               lhs.chatroomImage == rhs.chatroomImage &&
+               lhs.chatroomName == rhs.chatroomName &&
+               lhs.chatList == rhs.chatList
+    }
+}
+
+struct Chat: Equatable, Hashable {
+    let user: User
+    let date: String
+    let message: String
+}
+
 enum User: String, CaseIterable, Hashable {
     case hue = "Hue"
     case jack = "Jack"
@@ -20,33 +40,6 @@ enum User: String, CaseIterable, Hashable {
     var profileImage: String {
         return rawValue
     }
-}
-
-struct ChatRoom: Hashable, Identifiable, Equatable {
-    let id: UUID
-    let chatroomImage: String
-    let chatroomName: String
-    let chatList: [Chat]
-    
-    static func == (lhs: ChatRoom, rhs: ChatRoom) -> Bool {
-        return lhs.id == rhs.id &&
-               lhs.chatroomImage == rhs.chatroomImage &&
-               lhs.chatroomName == rhs.chatroomName &&
-               lhs.chatList == rhs.chatList
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-        hasher.combine(chatroomImage)
-        hasher.combine(chatroomName)
-        hasher.combine(chatList)
-    }
-}
-
-struct Chat: Equatable, Hashable {
-    let user: User
-    let date: String
-    let message: String
 }
 
 struct MockChat {

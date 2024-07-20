@@ -32,7 +32,6 @@ class TalkListViewController: BaseViewController<TalkListView> {
     
     override func configureView() {
         navigationItem.title = "COCOA TALK"
-        
     }
 }
 
